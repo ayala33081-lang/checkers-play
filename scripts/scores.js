@@ -51,4 +51,42 @@ const leaderboard = {
     getRank(username) {
         const sorted = this.getSortedPlayers();
         return sorted.findIndex(p => p.username === username) + 1;
+    },
+
+    /**
+     * מסנן שחקנים לפי מחרוזת חיפוש.
+     * שימוש ב-includes על מחרוזת.
+     * @param {string} searchTerm
+     * @returns {Player[]}
+     */
+    filterByName(searchTerm) {
+        const term = searchTerm.trim().toLowerCase();
+        return this.getSortedPlayers().filter(player =>
+            this.formatName(player.username).toLowerCase().includes(term)
+        );
+    },
+
+    /**
+     * בונה שורת טבלה עבור שחקן נתון.
+     * @param {Player} player - אובייקט השחקן
+     * @param {number} rank - דירוג השחקן
+     * @returns {HTMLTableRowElement}
+     */
+    buildRow(player, rank) {
+        const row = document.createElement('tr');
+
+        const cells = [
+            rank,
+            this.formatName(player.username),
+            player.wins,
+            player.bestTime || '--:--'
+        ];
+
+        cells.forEach(value => {
+            const td = document.createElement('td');
+            td.textContent = value;
+            row.appendChild(td);
+        });
+
+        return row;
     }
