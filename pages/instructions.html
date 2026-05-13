@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>דמקה | הוראות המשחק</title>
+    <link rel="stylesheet" href="../styles/global.css">
+    <link rel="stylesheet" href="../styles/instructions.css">
+   
+</head>
+<body class="page-instructions">
+
+    <header class="main-hud-header">
+        <div class="hud-container">
+            <div class="hud-left">
+                <button id="btn-open-settings" class="hud-icon-btn" title="הגדרות">
+                    <span class="icon">&#9881;</span>
+                </button>
+            </div>
+            <div class="hud-center">
+                <div class="hud-logo">
+                    CHECKERS<span class="neon-text">PRO</span>
+                </div>
+            </div>
+            <nav class="hud-right">
+                <ul class="hud-nav-pills">
+                    <li><a href="../index.html" class="pill-link">בית</a></li>
+                    <li><a href="instructions.html" class="pill-link active" aria-current="page">הוראות</a></li>
+                    <li><a href="scores.html" class="pill-link">שיאים</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="content-layout">
+        <article class="card instructions-card">
+
+            <div class="page-header-row">
+                <div>
+                    <h1 class="page-title">הוראות המשחק</h1>
+                    <p class="subtitle">כל מה שצריך לדעת לפני שנכנסים לזירה</p>
+                </div>
+            </div>
+
+            <div class="instructions-grid">
+
+                <!-- מטרה -->
+                <div class="instruction-block">
+                    <span class="block-icon">🎯</span>
+                    <h2>מטרת המשחק</h2>
+                    <p>לאכול את כל כלי היריב מהלוח, או לחסום אותם כך שלא יוכלו לבצע אף מהלך חוקי.</p>
+                </div>
+
+                <!-- שחקנים -->
+                <div class="instruction-block">
+                    <span class="block-icon">👥</span>
+                    <h2>השחקנים</h2>
+                    <div class="players-showcase">
+                        <div class="player-badge">
+                            <div class="piece-demo teal"></div>
+                            <span style="color: var(--text-main); font-size: 0.88rem;">שחקן 1 — טורכיז</span>
+                        </div>
+                        <div class="player-badge">
+                            <div class="piece-demo purple"></div>
+                            <span style="color: var(--text-main); font-size: 0.88rem;">שחקן 2 — סגול</span>
+                        </div>
+                    </div>
+                    <p style="margin-top: 0.75rem;">שחקן 1 (טורכיז) תמיד פותח. כלים זזים על המשבצות הכהות בלבד.</p>
+                </div>
+
+                <!-- תנועה -->
+                <div class="instruction-block">
+                    <span class="block-icon">↗️</span>
+                    <h2>תנועה רגילה</h2>
+                    <ul>
+                        <li>כלי רגיל נע צעד אחד באלכסון <strong>קדימה בלבד</strong> אל משבצת פנויה.</li>
+                        <li>גוררים את הכלי עם העכבר (Drag & Drop) אל היעד הרצוי.</li>
+                        <li>לאחר ביצוע מהלך לוחצים <strong>סיום התור</strong> כדי להעביר את התור.</li>
+                    </ul>
+                </div>
+
+                <!-- אכילה -->
+                <div class="instruction-block">
+                    <span class="block-icon">⚔️</span>
+                    <h2>אכילת כלים</h2>
+                    <ul>
+                        <li>דולגים באלכסון מעל כלי יריב אל המשבצת הפנויה שמעבר לו — הכלי נאכל.</li>
+                        <li><strong>חובת אכילה:</strong> אם אפשר לאכול — חייבים לאכול.</li>
+                    </ul>
+                </div>
+
+                <!-- מלך -->
+                <div class="instruction-block">
+                    <span class="block-icon">👑</span>
+                    <h2>הכתרה למלך</h2>
+                    <ul>
+                        <li>כלי שמגיע לשורה האחרונה בצד היריב מוכתר ל<strong>מלך</strong>.</li>
+                        <li>המלך יכול לנוע ולאכול באלכסון <strong>גם קדימה וגם אחורה</strong>.</li>
+                    </ul>
+                    <div class="players-showcase" style="margin-top: 0.75rem;">
+                        <div class="player-badge">
+                            <div class="piece-demo teal queen"></div>
+                            <span style="color: var(--text-muted); font-size: 0.82rem;">מלך טורכיז</span>
+                        </div>
+                        <div class="player-badge">
+                            <div class="piece-demo purple queen"></div>
+                            <span style="color: var(--text-muted); font-size: 0.82rem;">מלך סגול</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- טיימר -->
+                <div class="instruction-block">
+                    <span class="block-icon">⏱️</span>
+                    <h2>טיימר ורמות קושי</h2>
+                    <p>לכל שחקן טיימר נפרד. הזמן רץ רק בתור שלך. מי שנגמר לו הזמן — מפסיד!</p>
+                    <table class="difficulty-table">
+                        <thead>
+                            <tr>
+                                <th>רמה</th>
+                                <th>זמן לשחקן</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>קל</td><td>10:00</td></tr>
+                            <tr><td>בינוני</td><td>05:00</td></tr>
+                            <tr><td>קשה</td><td>03:00</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- רמז -->
+                <div class="instruction-block full-width">
+                    <span class="block-icon">💡</span>
+                    <h2>כפתור הרמז <span class="hint-tag">רמז</span></h2>
+                    <p>לחצו על <strong>קבל רמז</strong> בזמן המשחק — הלוח יסמן את הכלי הראשון שיכול לנוע. ניתן להפעיל או לכבות את האפשרות הזו בתפריט <strong>הגדרות</strong>.</p>
+                </div>
+
+            </div>
+        </article>
+    </main>
+
+    <footer class="main-footer">
+        <p>&copy; 2026 פרויקט דמקה | פותח על ידי אילה עיצוב ופיתוח | סמינר מאיר</p>
+    </footer>
+
+    <dialog id="modal-settings" class="modal" aria-labelledby="modal-settings-title">
+        <div class="modal-inner">
+            <button class="btn-close-modal" id="btn-close-settings" aria-label="סגור חלון">&times;</button>
+            <h2 id="modal-settings-title" class="modal-title">הגדרות משחק</h2>
+            <div class="settings-list">
+                <div class="setting-item">
+                    <span class="setting-label">שמע (אפקטים ומוזיקה)</span>
+                    <label class="toggle-switch"><input type="checkbox" id="toggle-sound" checked><span class="toggle-slider"></span></label>
+                </div>
+                <div class="setting-item">
+                    <span class="setting-label">אפשר רמזים במהלך המשחק</span>
+                    <label class="toggle-switch"><input type="checkbox" id="toggle-hints" checked><span class="toggle-slider"></span></label>
+                </div>
+            </div>
+        </div>
+    </dialog>
+
+    <script type="module" src="../scripts/instructions.js"></script>
+</body>
+</html>
