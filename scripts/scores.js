@@ -30,4 +30,25 @@ const leaderboard = {
         return this.allPlayers
             .filter(player => player.wins && player.wins > 0)
             .toSorted((a, b) => b.wins - a.wins);
+    },
+
+    /**
+     * מעצב שם שחקן להצגה - מסיר רווחים כפולים.
+     * שימוש ב-replace עם ביטוי רגולרי.
+     * @param {string} username
+     * @returns {string}
+     */
+    formatName(username) {
+        return username.trim().replace(/\s+/g, ' ');
+    },
+
+    /**
+     * מחזיר את הדירוג של שחקן לפי שם.
+     * שימוש ב-findIndex על מערך האובייקטים.
+     * @param {string} username
+     * @returns {number} דירוג (1-based), או -1 אם לא נמצא
+     */
+    getRank(username) {
+        const sorted = this.getSortedPlayers();
+        return sorted.findIndex(p => p.username === username) + 1;
     }
