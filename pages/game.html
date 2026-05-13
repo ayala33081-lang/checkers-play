@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>דמקה | זירת המשחק</title>
+     <link rel="stylesheet" href="../styles/global.css">
+    <link rel="stylesheet" href="../styles/game.css">
+</head>
+<body class="page-game">
+
+
+    <header class="main-hud-header">
+    <div class="hud-container">
+        <div class="hud-left">
+            <button id="btn-open-settings" class="hud-icon-btn" title="הגדרות">
+                <span class="icon">⚙️</span>
+            </button>
+        </div>
+        
+        <div class="hud-center">
+            <div class="hud-logo">
+                CHECKERS<span class="neon-text">PRO</span>
+            </div>
+        </div>
+
+        <nav class="hud-right">
+            <ul class="hud-nav-pills">
+                <li><a href="../index.html" class="pill-link">בית</a></li>
+                <li><a href="instructions.html" class="pill-link">הוראות</a></li>
+                <li><a href="scores.html" class="pill-link">שיאים</a></li>
+                <!-- <li><a href="#" class="pill-link active">התחל משחק</a></li> -->
+            </ul>
+        </nav>
+    </div>
+</header>
+
+    
+    <main class="game-layout">
+        
+        <section class="board-section" aria-label="לוח דמקה">
+            <div id="checkers-board" class="board-container">
+                </div>
+        </section>
+
+        <aside class="dashboard-section" aria-label="נתוני משחק">
+            
+            <article class="card player-stat-card active-turn" id="stat-card-p1">
+                <header class="stat-header">
+                    <h3 class="card-title" id="display-name-p1">שחקן 1 (לבן)</h3>
+                    <div class="player-timer" id="timer-p1">03:00</div>
+                </header>
+                <ul class="stat-list">
+                    <li>חיילים שאכל: <span id="eaten-p1" class="stat-value">0</span></li>
+                    <li>מלכים שיצר: <span id="kings-p1" class="stat-value">0</span></li>
+                </ul>
+            </article>
+
+            <article class="card player-stat-card" id="stat-card-p2">
+                <header class="stat-header">
+                    <h3 class="card-title" id="display-name-p2">שחקן 2 (שחור)</h3>
+                    <div class="player-timer" id="timer-p2">03:00</div>
+                </header>
+                <ul class="stat-list">
+                    <li>חיילים שאכל: <span id="eaten-p2" class="stat-value">0</span></li>
+                    <li>מלכים שיצר: <span id="kings-p2" class="stat-value">0</span></li>
+                </ul>
+            </article>
+
+            <article class="card actions-card">
+                <div class="action-buttons">
+                    <button id="btn-end-turn" class="btn btn-warning btn-full">סיום התור</button>
+                    <button id="btn-hint" class="btn btn-info btn-full">קבל רמז</button>
+                </div>
+            </article>
+
+        </aside>
+
+    </main>
+
+    <footer class="main-footer">
+        <p>&copy; 2026 פרויקט דמקה | פותח על ידי אילה עיצוב ופיתוח | סמינר מאיר</p>
+    </footer>
+
+    <dialog id="modal-settings" class="modal" aria-labelledby="modal-settings-title">
+        <div class="modal-inner">
+            <button class="btn-close-modal" id="btn-close-settings" aria-label="סגור חלון">&times;</button>
+            <h2 id="modal-settings-title" class="modal-title">הגדרות משחק</h2>
+            <div class="settings-list">
+                <div class="setting-item">
+                    <span class="setting-label">שמע (אפקטים ומוזיקה)</span>
+                    <label class="toggle-switch"><input type="checkbox" id="toggle-sound" checked><span class="toggle-slider"></span></label>
+                </div>
+                <div class="setting-item">
+                    <span class="setting-label">אפשר רמזים במהלך המשחק</span>
+                    <label class="toggle-switch"><input type="checkbox" id="toggle-hints" checked><span class="toggle-slider"></span></label>
+                </div>
+            </div>
+        </div>
+    </dialog>
+
+<dialog id="modal-game-over" class="modal">
+    <div class="modal-inner">
+        
+        <h2 class="modal-title">המשחק הסתיים!</h2>
+        
+        <div class="modal-body">
+            <div class="game-over-status">
+                <p id="winner-message" class="highlight-text">המנצח הוא: שחקן 1</p>
+            </div>
+            <div class="final-stats">
+                </div>
+        </div>
+
+        <div class="modal-actions-list">
+            <a href="scores.html" class="btn btn-accent btn-full">לצפייה בטבלת שיאים</a>
+            <a href="../index.html" class="btn btn-secondary btn-full">חזרה לדף הבית</a>
+            <button id="btn-restart-game" class="btn btn-outline btn-full">משחק חדש</button>
+        </div>
+    </div>
+</dialog>
+    <script type="module" src="../scripts/game.js"></script>
+
+</body>
+</html>
