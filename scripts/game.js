@@ -259,3 +259,26 @@ const formatTime = (seconds) => {
     const s = seconds % 60;
     return `${m}:${s < 10 ? '0' : ''}${s}`;
 };
+/**
+ * מפעיל את שעון המשחק - מחסיר שנייה בכל פעימה מהשחקן הפעיל.
+ * @returns {void}
+ */
+const startTimer = () => {
+    if (gameState.timerInterval) clearInterval(gameState.timerInterval);
+
+    gameState.timerInterval = setInterval(() => {
+        if (gameState.isGameOver) return;
+
+        if (gameState.isPlayer1Turn) {
+            gameState.p1Time--;
+            if (els.timerP1) els.timerP1.textContent = formatTime(gameState.p1Time);
+            els.statCardP1?.classList.toggle('time-warning', gameState.p1Time <= 30 && gameState.p1Time > 0);
+            if (gameState.p1Time <= 0) handleGameOver(p2Name, `נגמר הזמן ל-${p1Name}`);
+        } else {
+            gameState.p2Time--;
+            if (els.timerP2) els.timerP2.textContent = formatTime(gameState.p2Time);
+            els.statCardP2?.classList.toggle('time-warning', gameState.p2Time <= 30 && gameState.p2Time > 0);
+            if (gameState.p2Time <= 0) handleGameOver(p1Name, `נגמר הזמן ל-${p2Name}`);
+        }
+    }, 1000);
+};
