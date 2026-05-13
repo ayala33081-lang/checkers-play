@@ -1,0 +1,138 @@
+/* =========================================
+   עיצובים ייחודיים לדף הבית (page-home)
+   ========================================= */
+
+/* --- אזור הגיבור (Hero Section) --- */
+.hero-section {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+}
+
+.hero-title {
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    color: var(--text-main);
+    text-shadow: 0 0 20px rgba(45, 212, 191, 0.4);
+    margin-bottom: 3rem;
+    letter-spacing: 2px;
+}
+
+/* --- כרטיס בחירת רמה --- */
+.level-selection-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 2.5rem;
+    margin-bottom: 3rem;
+    box-shadow: var(--shadow-subtle);
+    width: 100%;
+    max-width: 600px;
+}
+
+.section-subtitle {
+    color: var(--accent-color);
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    font-weight: 800;
+}
+
+/* --- קבוצת רדיו (בחירת רמה) --- */
+.radio-group {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.radio-label {
+    position: relative;
+    cursor: pointer;
+    flex: 1;
+    min-width: 120px;
+}
+
+.radio-label input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.radio-custom {
+    display: block;
+    padding: 1rem;
+    background-color: rgba(15, 23, 42, 0.6);
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all var(--transition-speed);
+}
+
+.radio-label:hover .radio-custom {
+    border-color: rgba(45, 212, 191, 0.5);
+    color: var(--text-main);
+    transform: translateY(-2px);
+}
+
+.radio-label input[type="radio"]:checked + .radio-custom {
+    background-color: rgba(45, 212, 191, 0.15);
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+    box-shadow: 0 0 20px rgba(45, 212, 191, 0.3);
+    transform: translateY(-4px);
+}
+
+/* --- מודאל אימות שחקנים (ייחודי לדף הבית) --- */
+.modal-large {
+    max-width: 750px;
+}
+
+.auth-form.dual-form .players-inputs-container {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+
+.player-fieldset {
+    flex: 1;
+    min-width: 280px;
+}
+
+.form-control {
+    margin-bottom: 1.2rem;
+}
+
+.form-control label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    text-align: right;
+}
+
+.form-control input {
+    width: 100%;
+    padding: 0.8rem;
+    background-color: rgba(15, 23, 42, 0.5);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-main);
+    font-family: inherit;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.form-control input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 5px rgba(45, 212, 191, 0.3);
+}
