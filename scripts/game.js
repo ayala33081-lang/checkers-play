@@ -245,3 +245,17 @@ const handleEndTurn = () => {
     els.btnEnd?.classList.remove('ready');
     renderBoard();
 };
+// =========================================
+// --- טיימר ---
+// =========================================
+
+/**
+ * ממיר שניות לפורמט mm:ss.
+ * @param {number} seconds - מספר שניות
+ * @returns {string} מחרוזת בפורמט mm:ss
+ */
+const formatTime = (seconds) => {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${m}:${s < 10 ? '0' : ''}${s}`;
+};
