@@ -467,3 +467,5 @@ const handleHint = () => {
         }
     }
 };
+// --- הפעלת המשחק ---
+setupGame();
