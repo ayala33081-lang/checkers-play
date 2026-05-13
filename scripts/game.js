@@ -428,3 +428,42 @@ if (isP1Piece !== gameState.isPlayer1Turn) {
         }
     });
 };
+// =========================================
+// --- רמז ---
+// =========================================
+
+/**
+ * מדגיש את הכלי הראשון שיכול לנוע כרמז ויזואלי.
+ * לא מופעל אם הרמזים מושבתים בהגדרות.
+ * @returns {void}
+ */
+const handleHint = () => {
+    if (gameState.isGameOver) return;
+
+    const directions = [[-1,-1],[-1,1],[1,-1],[1,1],[-2,-2],[-2,2],[2,-2],[2,2]];
+
+    for (let r = 0; r < 8; r++) {
+        for (let c = 0; c < 8; c++) {
+            const cell = gameState.boardMatrix[r][c];
+
+            const isCurrentPlayer = gameState.isPlayer1Turn
+                ? (cell === 1 || cell === 3)
+                : (cell === 2 || cell === 4);
+
+            if (!isCurrentPlayer) continue;
+
+            const canMove = directions.some(([dr, dc]) =>
+                checkMoveValidity(r, c, r + dr, c + dc, cell).valid
+            );
+
+            if (canMove) {
+                const sq = els.board?.querySelector(`[data-row="${r}"][data-col="${c}"]`);
+                if (sq) {
+                    sq.classList.add('hint-active');
+                    setTimeout(() => sq.classList.remove('hint-active'), 1500);
+                }
+                return;
+            }
+        }
+    }
+};
