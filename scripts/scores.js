@@ -89,4 +89,56 @@ const leaderboard = {
         });
 
         return row;
+    },
+
+    /**
+     * מרנדר את הטבלה לפי רשימת שחקנים נתונה.
+     * @param {Player[]} players - רשימת שחקנים להצגה
+     * @returns {void}
+     */
+    renderRows(players) {
+        const tableBody = document.querySelector('#scores-table tbody');
+        if (!tableBody) return;
+
+        // ניקוי הטבלה - ללא innerHTML
+        tableBody.replaceChildren();
+
+        if (players.length === 0) {
+            const emptyRow = document.createElement('tr');
+            const emptyCell = document.createElement('td');
+            emptyCell.setAttribute('colspan', '4');
+            emptyCell.textContent = 'לא נמצאו שחקנים תואמים.';
+            emptyCell.style.textAlign = 'center';
+            emptyRow.appendChild(emptyCell);
+            tableBody.appendChild(emptyRow);
+            return;
+        }
+
+        players.forEach((player, index) => {
+            tableBody.appendChild(this.buildRow(player, index + 1));
+        });
+    },
+
+    /**
+     * מאתחל את לוח השיאים: מרנדר ומחבר את אירוע החיפוש.
+     * @returns {void}
+     */
+    init() {
+        this.renderRows(this.getSortedPlayers());
+        this.attachSearchEvent();
+    },
+
+    /**
+     * מחבר אירוע input לשדה החיפוש לסינון חי של הטבלה.
+     * @returns {void}
+     */
+    attachSearchEvent() {
+        const searchInput = document.querySelector('#search-scores');
+        if (!searchInput) return;
+
+        searchInput.addEventListener('input', (e) => {
+            const filtered = this.filterByName(e.target.value);
+            this.renderRows(filtered);
+        });
     }
+};
