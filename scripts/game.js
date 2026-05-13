@@ -317,3 +317,25 @@ const handleGameOver = (winnerName, reason) => {
     }
     els.modalGameOver?.showModal();
 };
+/**
+ * שומר ניצחון ב-localStorage עם עדכון זמן שיא.
+ * מעדכן bestTime רק אם הזמן החדש מהיר יותר מהשיא הקיים.
+ * @param {string} winnerName - שם השחקן המנצח
+ * @param {number} timeUsedSeconds - כמה שניות נמשך המשחק
+ * @returns {void}
+ */
+const saveWinToStorage = (winnerName, timeUsedSeconds) => {
+    const allPlayers = JSON.parse(localStorage.getItem('allPlayers')) || [];
+    const winner = allPlayers.find(p => p.username === winnerName);
+    if (!winner) return;
+
+    winner.wins = (winner.wins ?? 0) + 1;
+
+    const prevBest = winner.bestTimeSeconds ?? Infinity;
+    if (timeUsedSeconds < prevBest) {
+        winner.bestTimeSeconds = timeUsedSeconds;
+        winner.bestTime = formatTime(timeUsedSeconds);
+    }
+
+    localStorage.setItem('allPlayers', JSON.stringify(allPlayers));
+};
