@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>דמקה | מסך הבית</title>
+    <link rel="stylesheet" href="styles/global.css">
+    <link rel="stylesheet" href="styles/home.css">
+</head>
+<body class="page-home">
+    
+    <header class="main-hud-header">
+    <div class="hud-container">
+        <div class="hud-left">
+            <button id="btn-open-settings" class="hud-icon-btn" title="הגדרות">
+                <span class="icon">⚙️</span>
+            </button>
+        </div>
+        
+        <div class="hud-center">
+            <div class="hud-logo">
+                CHECKERS<span class="neon-text">PRO</span>
+            </div>
+        </div>
+
+        <nav class="hud-right">
+            <ul class="hud-nav-pills">
+                <li><a href="index.html" class="pill-link">בית</a></li>
+                <li><a href="pages/instructions.html" class="pill-link">הוראות</a></li>
+                <li><a href="pages/scores.html" class="pill-link">שיאים</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+    <main class="hero-section">
+        <h1 class="hero-title">ברוכים הבאים לדמקה</h1>
+        
+        <section class="level-selection-card">
+            <h2 class="section-subtitle">בחר רמה</h2>
+            <div class="radio-group">
+                <label class="radio-label">
+                    <input type="radio" name="game-level" value="easy" checked>
+                    <span class="radio-custom">קל</span>
+                </label>
+                <label class="radio-label">
+                    <input type="radio" name="game-level" value="medium">
+                    <span class="radio-custom">בינוני</span>
+                </label>
+                <label class="radio-label">
+                    <input type="radio" name="game-level" value="hard">
+                    <span class="radio-custom">קשה</span>
+                </label>
+            </div>
+        </section>
+
+        <button id="btn-open-auth" class="btn btn-primary btn-large">הזן שחקנים והתחל &larr;</button>
+    </main>
+
+    <footer class="main-footer">
+        <p>&copy; 2026 פרויקט דמקה | פותח על ידי אילה עיצוב ופיתוח | סמינר מאיר</p>
+    </footer>
+
+    <dialog id="modal-auth" class="modal" aria-labelledby="modal-auth-title">
+        <div class="modal-inner modal-large">
+            <button class="btn-close-modal" id="btn-close-auth" aria-label="סגור חלון">&times;</button>
+            <h2 id="modal-auth-title" class="modal-title">הזנת פרטי שחקנים</h2>
+            
+            <form id="form-auth-players" class="auth-form dual-form">
+                <div class="players-inputs-container">
+                    
+                    <fieldset class="player-fieldset">
+                        <legend>שחקן 1</legend>
+                        <div class="form-control">
+                            <label for="p1-username">שם משתמש:</label>
+                            <input type="text" id="p1-username" required autocomplete="username">
+                            <span id="p1-error" class="error-message"></span> 
+                        </div>
+                        <div class="form-control">
+                            <label for="p1-password">סיסמה (להתחברות/הרשמה):</label>
+                            <input type="password" id="p1-password" required autocomplete="new-password">
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="player-fieldset">
+                        <legend>שחקן 2</legend>
+                        <div class="form-control">
+                            <label for="p2-username">שם משתמש:</label>
+                            <input type="text" id="p2-username" required autocomplete="username">
+                            <span id="p2-error" class="error-message"></span>
+                        </div>
+                        <div class="form-control">
+                            <label for="p2-password">סיסמה (להתחברות/הרשמה):</label>
+                            <input type="password" id="p2-password" required autocomplete="new-password">
+                        </div>
+                    </fieldset>
+
+                </div>
+                <button type="submit" class="btn btn-accent btn-full">שמור שחקנים והיכנס לזירה!</button>
+            </form>
+        </div>
+    </dialog>
+
+    <dialog id="modal-settings" class="modal" aria-labelledby="modal-settings-title">
+        <div class="modal-inner">
+            <button class="btn-close-modal" id="btn-close-settings" aria-label="סגור חלון">&times;</button>
+            <h2 id="modal-settings-title" class="modal-title">הגדרות משחק</h2>
+            
+            <div class="settings-list">
+                <div class="setting-item">
+                    <span class="setting-label">שמע (אפקטים ומוזיקה)</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="toggle-sound" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <span class="setting-label">אפשר רמזים במהלך המשחק</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="toggle-hints" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </dialog>
+    <script type="module" src="scripts/index.js"></script>
+
+</body>
+</html>
