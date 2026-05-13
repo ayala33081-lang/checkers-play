@@ -26,3 +26,16 @@ export const initBoardMatrix = () => {
         gameState.boardMatrix.push(newRow);
     }
 };
+/**
+ * מעדכן את המטריצה לאחר מהלך - מנקה את המקור וממלא את היעד
+ * @param {number} oR - שורת המקור
+ * @param {number} oC - עמודת המקור
+ * @param {number} nR - שורת היעד
+ * @param {number} nC - עמודת היעד
+ * @param {number} val - ערך הכלי (1-4)
+ * @returns {void}
+ */
+export const updateMatrixAfterMove = (oR, oC, nR, nC, val) => {
+    gameState.boardMatrix[oR][oC] = 0;
+    gameState.boardMatrix[nR][nC] = val;
+};
