@@ -104,4 +104,26 @@ const audio = {
 
         osc.start(ctx.currentTime);
         osc.stop(ctx.currentTime + duration);
+    },
+
+    /** צליל מהלך רגיל 
+     * @returns {void}
+    */
+    move()    { this.play(440, 0.08); },
+
+    /** צליל אכילת כלי יריב - מכה קצרה ועמוקה 
+     * @returns {void}
+    */
+    capture() {
+        this.play(180, 0.12, 'triangle');
+        setTimeout(() => this.play(120, 0.18, 'sine'), 80);
+    },
+
+    /** צליל הכתרה למלכה - שלושה תווים עולים 
+     * @returns {void}
+    */
+    queen() {
+        this.play(523, 0.12);
+        setTimeout(() => this.play(659, 0.12), 130);
+        setTimeout(() => this.play(784, 0.25), 260);
     }
