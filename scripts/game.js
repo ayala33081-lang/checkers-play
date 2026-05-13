@@ -26,3 +26,25 @@ const startTime = DIFFICULTY_TIMES[selectedLevel] ?? 600;
 
 gameState.p1Time = startTime;
 gameState.p2Time = startTime;
+
+/**
+ * אובייקט המרכז את כל אלמנטי ה-DOM הדרושים למשחק.
+ * @type {Object}
+ */
+const els = {
+    board:         document.querySelector('#checkers-board'),
+    timerP1:       document.querySelector('#timer-p1'),
+    timerP2:       document.querySelector('#timer-p2'),
+    nameP1:        document.querySelector('#display-name-p1'),
+    nameP2:        document.querySelector('#display-name-p2'),
+    eatenP1:       document.querySelector('#eaten-p1'),
+    eatenP2:       document.querySelector('#eaten-p2'),
+    kingsP1:       document.querySelector('#kings-p1'),
+    kingsP2:       document.querySelector('#kings-p2'),
+    statCardP1:    document.querySelector('#stat-card-p1'),
+    statCardP2:    document.querySelector('#stat-card-p2'),
+    btnEnd:        document.querySelector('#btn-end-turn'),
+    btnHint:       document.querySelector('#btn-hint'),
+    modalGameOver: document.querySelector('#modal-game-over'),
+    winnerMsg:     document.querySelector('#winner-message')
+};
