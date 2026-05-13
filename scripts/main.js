@@ -45,3 +45,22 @@ if (hintsToggle) {
         window.dispatchEvent(new CustomEvent('hintsSettingChanged'));
     });
 }
+/**
+ * טוען את הגדרות הצליל והרמזים מה-localStorage ומחיל אותן על המתגים.
+ * @returns {void}
+ */
+const loadSettings = () => {
+    const savedSound = localStorage.getItem('isSound');
+    const savedHints = localStorage.getItem('isHints');
+
+    if (savedSound !== null && soundToggle) {
+        soundToggle.checked = (savedSound === 'true');
+    }
+
+    if (savedHints !== null && hintsToggle) {
+        hintsToggle.checked = (savedHints === 'true');
+    }
+};
+
+loadSettings();
+
