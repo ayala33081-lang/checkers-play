@@ -83,3 +83,17 @@ export const checkMoveValidity = (oR, oC, nR, nC, pieceValue) => {
 
     return { valid: false };
 };
+/**
+ * סופר את מספר הכלים הנותרים לכל שחקן על הלוח
+ * @returns {{ p1: number, p2: number }} מספר הכלים של כל שחקן
+ */
+export const countPieces = () => {
+    let p1 = 0, p2 = 0;
+    gameState.boardMatrix.forEach(row => {
+        row.forEach(cell => {
+            if (cell === 1 || cell === 3) p1++;
+            if (cell === 2 || cell === 4) p2++;
+        });
+    });
+    return { p1, p2 };
+};
