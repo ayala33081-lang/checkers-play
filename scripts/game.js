@@ -228,3 +228,20 @@ const renderBoard = () => {
     els.statCardP1?.classList.toggle('active-turn', gameState.isPlayer1Turn);
     els.statCardP2?.classList.toggle('active-turn', !gameState.isPlayer1Turn);
 };
+// =========================================
+// --- ניהול תורות ---
+// =========================================
+
+/**
+ * מטפל בסיום תור: מעביר תור לשחקן הבא ומאפס דגל מהלך.
+ * @returns {void}
+ */
+const handleEndTurn = () => {
+    if (!gameState.hasMovedThisTurn || gameState.isGameOver) return;
+
+    gameState.isPlayer1Turn = !gameState.isPlayer1Turn;
+    gameState.hasMovedThisTurn = false;
+
+    els.btnEnd?.classList.remove('ready');
+    renderBoard();
+};
