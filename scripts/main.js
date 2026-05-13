@@ -64,3 +64,29 @@ const loadSettings = () => {
 
 loadSettings();
 
+// ==========================================
+// --- ייצוא פונקציות לשאר קובצי הפרויקט ---
+// ==========================================
+
+/**
+ * מחזיר האם אפשרות הצליל מופעלת.
+ * @returns {boolean}
+ */
+export const isSoundEnabled = () => {
+    const saved = localStorage.getItem('isSound');
+    return saved === null || saved === 'true';
+};
+
+/**
+ * מחזיר האם אפשרות הרמזים מופעלת.
+ * @returns {boolean}
+ */
+export const isHintsEnabled = () => {
+    const saved = localStorage.getItem('isHints');
+    return saved === null || saved === 'true';
+};
+
+/**
+ * חושף את פונקציית setupModal לשימוש בדפים אחרים.
+ */
+export { setupModal };
