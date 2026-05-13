@@ -282,3 +282,38 @@ const startTimer = () => {
         }
     }, 1000);
 };
+// =========================================
+// --- סיום משחק ---
+// =========================================
+
+/**
+ * מסיים את המשחק, שומר ניצחון עם זמן שיא ומציג מודאל.
+ * @param {string} winnerName - שם השחקן המנצח
+ * @param {string} reason - סיבת סיום המשחק לתצוגה
+ * @returns {void}
+ */
+const handleGameOver = (winnerName, reason) => {
+    if (gameState.isGameOver) return;
+    gameState.isGameOver = true;
+    clearInterval(gameState.timerInterval);
+
+    const winnerTimeLeft = winnerName === p1Name ? gameState.p1Time : gameState.p2Time;
+    const timeUsed = startTime - winnerTimeLeft;
+
+    saveWinToStorage(winnerName, timeUsed);
+    audio.gameOver();
+
+    if (els.winnerMsg) {
+        els.winnerMsg.replaceChildren();
+
+        const titleText = document.createTextNode(`🏆 ${winnerName} מנצח/ת! 🏆`);
+
+        const reasonEl = document.createElement('small');
+        reasonEl.style.cssText = 'font-size:0.7em; font-weight:400; opacity:0.8; display:block';
+        reasonEl.textContent = reason;
+
+        els.winnerMsg.appendChild(titleText);
+        els.winnerMsg.appendChild(reasonEl);
+    }
+    els.modalGameOver?.showModal();
+};
