@@ -188,3 +188,43 @@ const setupGame = () => {
     setupModal('btn-open-settings', 'btn-close-settings', 'modal-settings');
     attachDragEvents();
 };
+// =========================================
+// --- רינדור הלוח ---
+// =========================================
+
+/**
+ * מרנדר את לוח הדמקה מחדש לפי מצב המטריצה הנוכחי.
+ * @returns {void}
+ */
+const renderBoard = () => {
+    if (!els.board) return;
+
+    els.board.replaceChildren();
+
+    gameState.boardMatrix.forEach((row, rIdx) => {
+        row.forEach((cell, cIdx) => {
+            const sq = document.createElement('div');
+            sq.className = `cell ${(rIdx + cIdx) % 2 !== 0 ? 'dark' : 'light'}`;
+            sq.dataset.row = rIdx;
+            sq.dataset.col = cIdx;
+
+            if (cell !== 0) {
+                const piece = document.createElement('div');
+                const isP1 = (cell === 1 || cell === 3);
+                piece.className = `piece ${isP1 ? 'player1' : 'player2'}`;
+                if (cell > 2) piece.classList.add('queen');
+
+                const canDrag = (isP1 === gameState.isPlayer1Turn)
+                    && !gameState.hasMovedThisTurn
+                    && !gameState.isGameOver;
+                piece.setAttribute('draggable', canDrag ? 'true' : 'false');
+
+                sq.appendChild(piece);
+            }
+            els.board.appendChild(sq);
+        });
+    });
+
+    els.statCardP1?.classList.toggle('active-turn', gameState.isPlayer1Turn);
+    els.statCardP2?.classList.toggle('active-turn', !gameState.isPlayer1Turn);
+};
