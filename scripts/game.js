@@ -48,3 +48,23 @@ const els = {
     modalGameOver: document.querySelector('#modal-game-over'),
     winnerMsg:     document.querySelector('#winner-message')
 };
+// =========================================
+// --- אודיו - Web Audio API ---
+// =========================================
+/**
+ * אובייקט לניהול צלילי המשחק באמצעות Web Audio API.
+ */
+const audio = {
+    /** @type {AudioContext|null} */
+    ctx: null,
+
+    /**
+     * מחזיר AudioContext קיים או יוצר חדש.
+     * @returns {AudioContext|null}
+     */
+    getCtx() {
+        if (!this.ctx) {
+            this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        return this.ctx;
+    }
