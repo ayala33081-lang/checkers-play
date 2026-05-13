@@ -142,3 +142,5 @@ const leaderboard = {
         });
     }
 };
+// --- הפעלה ---
+leaderboard.init();
