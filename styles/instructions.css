@@ -1,0 +1,201 @@
+/* =========================================
+   עיצובים ייחודיים לדף ההוראות (page-instructions)
+   ========================================= */
+
+/* --- כרטיס הוראות (רוחב מורחב) --- */
+.instructions-card {
+    max-width: 860px;
+    width: 100%;
+}
+
+/* --- כותרת הדף --- */
+.page-header-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.page-header-row .page-title {
+    margin-bottom: 0;
+    font-size: 1.6rem;
+}
+
+.page-header-row .subtitle {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* --- גריד ההוראות --- */
+.instructions-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+/* --- בלוק הוראה בודד --- */
+.instruction-block {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+.instruction-block:hover {
+    border-color: rgba(45, 212, 191, 0.3);
+    box-shadow: var(--shadow-glow);
+}
+
+.instruction-block.full-width {
+    grid-column: 1 / -1;
+}
+
+.block-icon {
+    display: none;
+}
+
+.instruction-block h2 {
+    font-size: 1.1rem;
+    color: var(--accent-color);
+    margin-bottom: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.instruction-block p,
+.instruction-block li {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 0.5rem;
+}
+
+.instruction-block ul {
+    padding-right: 1.2rem;
+    list-style: none;
+}
+
+.instruction-block ul li::before {
+    content: '◈ ';
+    color: var(--accent-color);
+    font-size: 0.75rem;
+}
+
+.instruction-block strong {
+    color: var(--text-main);
+    font-weight: 600;
+}
+
+/* --- תצוגת שחקנים --- */
+.players-showcase {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.75rem;
+}
+
+.player-badge {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color);
+}
+
+/* --- כלי דמו --- */
+.piece-demo {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.piece-demo.teal {
+    background: radial-gradient(circle at 35% 35%, #5eead4, #0d9488);
+    box-shadow: 0 0 10px rgba(45, 212, 191, 0.4);
+}
+
+.piece-demo.purple {
+    background: radial-gradient(circle at 35% 35%, #c084fc, #7e22ce);
+    box-shadow: 0 0 10px rgba(168, 85, 247, 0.4);
+}
+
+.piece-demo.queen::after {
+    content: '♛';
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* --- טבלת רמות קושי --- */
+.difficulty-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0.75rem;
+    font-size: 0.88rem;
+}
+
+.difficulty-table th,
+.difficulty-table td {
+    padding: 0.5rem 0.75rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.difficulty-table th {
+    color: var(--accent-color);
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.difficulty-table td {
+    color: var(--text-muted);
+}
+
+.difficulty-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* --- תג רמז --- */
+.hint-tag {
+    display: inline-block;
+    background: rgba(45, 212, 191, 0.1);
+    border: 1px solid rgba(45, 212, 191, 0.3);
+    color: var(--accent-color);
+    font-size: 0.75rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 20px;
+    font-weight: 600;
+    vertical-align: middle;
+    margin-right: 0.4rem;
+}
+
+/* =========================================
+   רספונסיביות
+   ========================================= */
+@media (max-width: 640px) {
+    .instructions-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .instruction-block.full-width {
+        grid-column: 1;
+    }
+
+    .players-showcase {
+        flex-direction: column;
+    }
+}
