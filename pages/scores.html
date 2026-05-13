@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>דמקה | טבלת שיאים</title>
+    <link rel="stylesheet" href="../styles/global.css">
+    <link rel="stylesheet" href="../styles/scores.css">
+</head>
+<body class="page-scores">
+
+    <header class="main-hud-header">
+    <div class="hud-container">
+        <div class="hud-left">
+            <button id="btn-open-settings" class="hud-icon-btn" title="הגדרות">
+                <span class="icon">⚙️</span>
+            </button>
+        </div>
+        
+        <div class="hud-center">
+            <div class="hud-logo">
+                CHECKERS<span class="neon-text">PRO</span>
+            </div>
+        </div>
+
+        <nav class="hud-right">
+            <ul class="hud-nav-pills">
+                <li><a href="../index.html" class="pill-link">בית</a></li>
+                <li><a href="instructions.html" class="pill-link">הוראות</a></li>
+                <li><a href="scores.html" class="pill-link">שיאים</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+    <main class="content-layout">
+        <article class="card leaderboard-card">
+            <header class="card-header">
+                <h1 class="page-title"> טבלת השיאים </h1>
+            </header>
+            
+            <div class="search-bar">
+                <input type="text" id="search-scores" class="form-input" placeholder="חפש שחקן...">
+            </div>
+            
+            <div class="table-responsive">
+
+                <table class="leaderboard-table" id="scores-table">
+                    <thead>
+                        <tr>
+                            <th>דירוג</th>
+                            <th>שם שחקן</th>
+                            <th>ניצחונות</th>
+                            <th>זמן ניצחון שיא</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </article>
+    </main>
+
+    <footer class="main-footer">
+        <p>&copy; 2026 פרויקט דמקה | פותח על ידי אילה עיצוב ופיתוח | סמינר מאיר</p>
+    </footer>
+
+    <dialog id="modal-settings" class="modal" aria-labelledby="modal-settings-title">
+        <div class="modal-inner">
+            <button class="btn-close-modal" id="btn-close-settings" aria-label="סגור חלון">&times;</button>
+            <h2 id="modal-settings-title" class="modal-title">הגדרות משחק</h2>
+            <div class="settings-list">
+                <div class="setting-item">
+                    <span class="setting-label">שמע (אפקטים ומוזיקה)</span>
+                    <label class="toggle-switch"><input type="checkbox" id="toggle-sound" checked><span class="toggle-slider"></span></label>
+                </div>
+                <div class="setting-item">
+                    <span class="setting-label">אפשר רמזים במהלך המשחק</span>
+                    <label class="toggle-switch"><input type="checkbox" id="toggle-hints" checked><span class="toggle-slider"></span></label>
+                </div>
+            </div>
+        </div>
+    </dialog>
+    <script type="module" src="../scripts/scores.js"></script>
+
+</body>
+</html>
