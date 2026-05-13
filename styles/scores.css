@@ -1,0 +1,52 @@
+/* =========================================
+   עיצובים ייחודיים לדף השיאים (page-scores)
+   ========================================= */
+
+/* --- כרטיס לוח השיאים (רוחב מורחב) --- */
+.leaderboard-card {
+    max-width: 800px;
+}
+
+/* --- שדה חיפוש --- */
+.search-bar {
+    margin-bottom: 1.5rem;
+}
+
+/* --- עטיפת טבלה (גלילה אופקית במסכים קטנים) --- */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
+/* --- טבלת לוח השיאים --- */
+.leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0.5rem;
+    text-align: right;
+}
+
+.leaderboard-table th,
+.leaderboard-table td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-main);
+}
+
+.leaderboard-table th {
+    color: var(--accent-color);
+    font-weight: 800;
+    font-size: 1.1rem;
+}
+
+.leaderboard-table tr {
+    transition: background-color var(--transition-speed);
+}
+
+.leaderboard-table tr:hover {
+    background-color: rgba(45, 212, 191, 0.05);
+}
+
+.leaderboard-table tbody tr:last-child td {
+    border-bottom: none;
+}
