@@ -339,3 +339,92 @@ const saveWinToStorage = (winnerName, timeUsedSeconds) => {
 
     localStorage.setItem('allPlayers', JSON.stringify(allPlayers));
 };
+// =========================================
+// --- גרירה ושחרור (Drag & Drop) ---
+// =========================================
+
+/**
+ * מחבר אירועי גרירה ושחרור ללוח באמצעות event delegation.
+ * @returns {void}
+ */
+const attachDragEvents = () => {
+    if (!els.board) return;
+
+    els.board.addEventListener('dragstart', (e) => {
+        if (!e.target.classList.contains('piece') || gameState.hasMovedThisTurn || gameState.isGameOver) {
+    e.preventDefault();
+    return;
+}
+
+const oR = parseInt(e.target.parentElement.dataset.row);
+const oC = parseInt(e.target.parentElement.dataset.col);
+const val = gameState.boardMatrix[oR][oC];
+const isP1Piece = (val === 1 || val === 3);
+
+if (isP1Piece !== gameState.isPlayer1Turn) {
+    e.preventDefault();
+    return;
+}
+        gameState.draggedPiece = e.target;
+        gameState.originSquare = e.target.parentElement;
+    });
+
+    els.board.addEventListener('dragover', (e) => e.preventDefault());
+
+    els.board.addEventListener('drop', (e) => {
+        e.preventDefault();
+        if (gameState.isGameOver || !gameState.originSquare) return;
+
+        const sq = e.target.closest('.cell');
+        if (!sq) return;
+
+        const oR = parseInt(gameState.originSquare.dataset.row);
+        const oC = parseInt(gameState.originSquare.dataset.col);
+        const nR = parseInt(sq.dataset.row);
+        const nC = parseInt(sq.dataset.col);
+        const val = gameState.boardMatrix[oR][oC];
+
+        const moveResult = checkMoveValidity(oR, oC, nR, nC, val);
+        if (!moveResult.valid) return;
+
+        if (moveResult.isCapture) {
+            gameState.boardMatrix[moveResult.midR][moveResult.midC] = 0;
+            audio.capture();
+
+            if (gameState.isPlayer1Turn) {
+                gameState.p1EatenCount++;
+                if (els.eatenP1) els.eatenP1.textContent = gameState.p1EatenCount;
+            } 
+            else {
+                gameState.p2EatenCount++;
+                if (els.eatenP2) els.eatenP2.textContent = gameState.p2EatenCount;
+            }
+        } else {
+            audio.move();
+        }
+
+        let finalVal = val;
+        if (val === 1 && nR === 0) {
+            finalVal = 3;
+            gameState.p1KingsCount++;
+            if (els.kingsP1) els.kingsP1.textContent = gameState.p1KingsCount;
+            audio.queen();
+        } else if (val === 2 && nR === 7) {
+            finalVal = 4;
+            gameState.p2KingsCount++;
+            if (els.kingsP2) els.kingsP2.textContent = gameState.p2KingsCount;
+            audio.queen();
+        }
+
+        updateMatrixAfterMove(oR, oC, nR, nC, finalVal);
+        gameState.hasMovedThisTurn = true;
+        els.btnEnd?.classList.add('ready');
+        renderBoard();
+
+        if (moveResult.isCapture) {
+            const { p1, p2 } = countPieces();
+            if (p1 === 0) handleGameOver(p2Name, `נגמרו הכלים של ${p1Name}`);
+            else if (p2 === 0) handleGameOver(p1Name, `נגמרו הכלים של ${p2Name}`);
+        }
+    });
+};
