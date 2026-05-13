@@ -140,3 +140,18 @@ const audio = {
         setTimeout(() => this.play(392, 0.6, 'sine'), 750);
     },
 };
+// =========================================
+// --- ניהול כפתור הרמז לפי הגדרות ---
+// =========================================
+
+/**
+ * מעדכן את מצב כפתור הרמז לפי הגדרת הרמזים ב-localStorage.
+ * @returns {void}
+ */
+const updateHintButton = () => {
+    if (!els.btnHint) return;
+    const hintsOn = localStorage.getItem('isHints');
+    const isEnabled = hintsOn === null || hintsOn === 'true';
+    els.btnHint.disabled = !isEnabled;
+    els.btnHint.classList.toggle('btn-disabled', !isEnabled);
+};
