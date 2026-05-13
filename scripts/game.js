@@ -155,3 +155,36 @@ const updateHintButton = () => {
     els.btnHint.disabled = !isEnabled;
     els.btnHint.classList.toggle('btn-disabled', !isEnabled);
 };
+// =========================================
+// --- אתחול המשחק ---
+// =========================================
+
+/**
+ * מאתחל ומפעיל את המשחק: לוח, שמות, טיימר ואירועים.
+ * @returns {void}
+ */
+const setupGame = () => {
+    initBoardMatrix();
+
+    if (els.nameP1) els.nameP1.textContent = `${p1Name} - שחקן טורכיז`;
+    if (els.nameP2) els.nameP2.textContent = `${p2Name} - שחקן סגול`;
+
+    if (els.timerP1) els.timerP1.textContent = formatTime(gameState.p1Time);
+    if (els.timerP2) els.timerP2.textContent = formatTime(gameState.p2Time);
+
+    renderBoard();
+    startTimer();
+    updateHintButton();
+
+
+    els.btnEnd?.addEventListener('click', handleEndTurn);
+    els.btnHint?.addEventListener('click', handleHint);
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') handleEndTurn();
+    });
+    window.addEventListener('hintsSettingChanged', updateHintButton);
+
+    setupModal('btn-open-settings', 'btn-close-settings', 'modal-settings');
+    attachDragEvents();
+};
