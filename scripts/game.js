@@ -126,4 +126,17 @@ const audio = {
         this.play(523, 0.12);
         setTimeout(() => this.play(659, 0.12), 130);
         setTimeout(() => this.play(784, 0.25), 260);
-    }
+    },
+
+    /** צליל ניצחון דרמטי - פנפארה עולה עם אקורד מלא 
+     * @returns {void}
+    */
+    gameOver() {
+        this.play(523, 0.12);
+        setTimeout(() => this.play(659, 0.12), 130);
+        setTimeout(() => this.play(784, 0.12), 260);
+        setTimeout(() => this.play(1047, 0.08, 'triangle'), 420);
+        setTimeout(() => { this.play(784, 0.5, 'sine'); this.play(1047, 0.5, 'triangle'); }, 500);
+        setTimeout(() => this.play(392, 0.6, 'sine'), 750);
+    },
+};
