@@ -67,4 +67,41 @@ const audio = {
             this.ctx = new (window.AudioContext || window.webkitAudioContext)();
         }
         return this.ctx;
+    },
+
+    /**
+     * בודק אם הצליל מופעל כרגע לפי ה-localStorage.
+     * נבדק בכל קריאה כדי לשקף שינוי הגדרה מיידי.
+     * @returns {boolean}
+     */
+    isEnabled() {
+        const saved = localStorage.getItem('isSound');
+        return saved === null || saved === 'true';
+    },
+
+    /**
+     * מנגן צליל לפי תדר, משך וסוג גל.
+     * @param {number} freq - תדר הצליל בהרץ
+     * @param {number} [duration=0.15] - משך הצליל בשניות
+     * @param {'sine'|'square'|'triangle'} [type='sine'] - סוג גל
+     * @returns {void}
+     */
+    play(freq, duration = 0.15, type = 'sine') {
+        if (!this.isEnabled()) return;
+
+        const ctx = this.getCtx();
+        if (!ctx) return;
+
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, ctx.currentTime);
+        gain.gain.setValueAtTime(0.3, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+
+        osc.start(ctx.currentTime);
+        osc.stop(ctx.currentTime + duration);
     }
