@@ -3,14 +3,14 @@
  * @module boardLogic
  */
 
-import { gameState } from './gameState.js';
+import { playState } from './playState.js';
 
 /**
  * מאתחל את מטריצת הלוח למצב התחלתי תקני של דמקה
  * @returns {void}
  */
 export const initBoardMatrix = () => {
-    gameState.boardMatrix = [];
+    playState.boardMatrix = [];
     for (let row = 0; row < 8; row++) {
         const newRow = [];
         for (let col = 0; col < 8; col++) {
@@ -23,7 +23,7 @@ export const initBoardMatrix = () => {
                 newRow.push(0);                   
             }
         }
-        gameState.boardMatrix.push(newRow);
+        playState.boardMatrix.push(newRow);
     }
 };
 /**
@@ -36,8 +36,8 @@ export const initBoardMatrix = () => {
  * @returns {void}
  */
 export const updateMatrixAfterMove = (oR, oC, nR, nC, val) => {
-    gameState.boardMatrix[oR][oC] = 0;
-    gameState.boardMatrix[nR][nC] = val;
+    playState.boardMatrix[oR][oC] = 0;
+    playState.boardMatrix[nR][nC] = val;
 };
 /**
  * בודק אם מהלך מסוים חוקי לפי חוקי הדמקה
@@ -50,7 +50,7 @@ export const updateMatrixAfterMove = (oR, oC, nR, nC, val) => {
  */
 export const checkMoveValidity = (oR, oC, nR, nC, pieceValue) => {
     if (nR < 0 || nR > 7 || nC < 0 || nC > 7) return { valid: false };
-    if (gameState.boardMatrix[nR][nC] !== 0) return { valid: false };
+    if (playState.boardMatrix[nR][nC] !== 0) return { valid: false };
 
     const rd = nR - oR;
     const cd = nC - oC;
@@ -71,7 +71,7 @@ export const checkMoveValidity = (oR, oC, nR, nC, pieceValue) => {
 
         const midR = oR + rd / 2;
         const midC = oC + cd / 2;
-        const midP = gameState.boardMatrix[midR][midC];
+        const midP = playState.boardMatrix[midR][midC];
 
         if (midP !== 0) {
             const isEnemy = (pieceValue % 2) !== (midP % 2);
@@ -89,7 +89,7 @@ export const checkMoveValidity = (oR, oC, nR, nC, pieceValue) => {
  */
 export const countPieces = () => {
     let p1 = 0, p2 = 0;
-    gameState.boardMatrix.forEach(row => {
+    playState.boardMatrix.forEach(row => {
         row.forEach(cell => {
             if (cell === 1 || cell === 3) p1++;
             if (cell === 2 || cell === 4) p2++;

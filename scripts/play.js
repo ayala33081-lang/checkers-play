@@ -1,18 +1,18 @@
 /**
  * @fileoverview לוגיקת דף המשחק - ניהול לוח, תורות, טיימר, אודיו וסיום משחק
- * @module game
+ * @module play
  */
 
-import { gameState } from './gameState.js';
+import { playState } from './playState.js';
 import { initBoardMatrix, checkMoveValidity, updateMatrixAfterMove, countPieces } from './boardLogic.js';
 import { setupModal } from './main.js';
 // =========================================
 // --- קריאת נתוני השחקנים ---
 // =========================================
 
-const currentGameData = JSON.parse(sessionStorage.getItem('currentGameData'));
-const p1Name = currentGameData.player1Name;
-const p2Name = currentGameData.player2Name;
+const currentplayData = JSON.parse(sessionStorage.getItem('currentplayData'));
+const p1Name = currentplayData.player1Name;
+const p2Name = currentplayData.player2Name;
 
 /**
  * זמן התחלה לפי רמת קושי בשניות.
@@ -21,11 +21,11 @@ const p2Name = currentGameData.player2Name;
 const DIFFICULTY_TIMES = { easy: 600, medium: 300, hard: 180 };
 
 const urlParams = new URLSearchParams(window.location.search);
-const selectedLevel = urlParams.get('level') ?? currentGameData.selectedLevel ?? 'easy';
+const selectedLevel = urlParams.get('level') ?? currentplayData.selectedLevel ?? 'easy';
 const startTime = DIFFICULTY_TIMES[selectedLevel] ?? 600;
 
-gameState.p1Time = startTime;
-gameState.p2Time = startTime;
+playState.p1Time = startTime;
+playState.p2Time = startTime;
 
 /**
  * אובייקט המרכז את כל אלמנטי ה-DOM הדרושים למשחק.
@@ -45,7 +45,7 @@ const els = {
     statCardP2:    document.querySelector('#stat-card-p2'),
     btnEnd:        document.querySelector('#btn-end-turn'),
     btnHint:       document.querySelector('#btn-hint'),
-    modalGameOver: document.querySelector('#modal-game-over'),
+    modalplayOver: document.querySelector('#modal-play-over'),
     winnerMsg:     document.querySelector('#winner-message')
 };
 // =========================================
@@ -131,7 +131,7 @@ const audio = {
     /** צליל ניצחון דרמטי - פנפארה עולה עם אקורד מלא 
      * @returns {void}
     */
-    gameOver() {
+    playOver() {
         this.play(523, 0.12);
         setTimeout(() => this.play(659, 0.12), 130);
         setTimeout(() => this.play(784, 0.12), 260);
@@ -163,14 +163,14 @@ const updateHintButton = () => {
  * מאתחל ומפעיל את המשחק: לוח, שמות, טיימר ואירועים.
  * @returns {void}
  */
-const setupGame = () => {
+const setupplay = () => {
     initBoardMatrix();
 
     if (els.nameP1) els.nameP1.textContent = `${p1Name} - שחקן טורכיז`;
     if (els.nameP2) els.nameP2.textContent = `${p2Name} - שחקן סגול`;
 
-    if (els.timerP1) els.timerP1.textContent = formatTime(gameState.p1Time);
-    if (els.timerP2) els.timerP2.textContent = formatTime(gameState.p2Time);
+    if (els.timerP1) els.timerP1.textContent = formatTime(playState.p1Time);
+    if (els.timerP2) els.timerP2.textContent = formatTime(playState.p2Time);
 
     renderBoard();
     startTimer();
@@ -201,7 +201,7 @@ const renderBoard = () => {
 
     els.board.replaceChildren();
 
-    gameState.boardMatrix.forEach((row, rIdx) => {
+    playState.boardMatrix.forEach((row, rIdx) => {
         row.forEach((cell, cIdx) => {
             const sq = document.createElement('div');
             sq.className = `cell ${(rIdx + cIdx) % 2 !== 0 ? 'dark' : 'light'}`;
@@ -214,9 +214,9 @@ const renderBoard = () => {
                 piece.className = `piece ${isP1 ? 'player1' : 'player2'}`;
                 if (cell > 2) piece.classList.add('queen');
 
-                const canDrag = (isP1 === gameState.isPlayer1Turn)
-                    && !gameState.hasMovedThisTurn
-                    && !gameState.isGameOver;
+                const canDrag = (isP1 === playState.isPlayer1Turn)
+                    && !playState.hasMovedThisTurn
+                    && !playState.isplayOver;
                 piece.setAttribute('draggable', canDrag ? 'true' : 'false');
 
                 sq.appendChild(piece);
@@ -225,8 +225,8 @@ const renderBoard = () => {
         });
     });
 
-    els.statCardP1?.classList.toggle('active-turn', gameState.isPlayer1Turn);
-    els.statCardP2?.classList.toggle('active-turn', !gameState.isPlayer1Turn);
+    els.statCardP1?.classList.toggle('active-turn', playState.isPlayer1Turn);
+    els.statCardP2?.classList.toggle('active-turn', !playState.isPlayer1Turn);
 };
 // =========================================
 // --- ניהול תורות ---
@@ -237,10 +237,10 @@ const renderBoard = () => {
  * @returns {void}
  */
 const handleEndTurn = () => {
-    if (!gameState.hasMovedThisTurn || gameState.isGameOver) return;
+    if (!playState.hasMovedThisTurn || playState.isplayOver) return;
 
-    gameState.isPlayer1Turn = !gameState.isPlayer1Turn;
-    gameState.hasMovedThisTurn = false;
+    playState.isPlayer1Turn = !playState.isPlayer1Turn;
+    playState.hasMovedThisTurn = false;
 
     els.btnEnd?.classList.remove('ready');
     renderBoard();
@@ -264,21 +264,21 @@ const formatTime = (seconds) => {
  * @returns {void}
  */
 const startTimer = () => {
-    if (gameState.timerInterval) clearInterval(gameState.timerInterval);
+    if (playState.timerInterval) clearInterval(playState.timerInterval);
 
-    gameState.timerInterval = setInterval(() => {
-        if (gameState.isGameOver) return;
+    playState.timerInterval = setInterval(() => {
+        if (playState.isplayOver) return;
 
-        if (gameState.isPlayer1Turn) {
-            gameState.p1Time--;
-            if (els.timerP1) els.timerP1.textContent = formatTime(gameState.p1Time);
-            els.statCardP1?.classList.toggle('time-warning', gameState.p1Time <= 30 && gameState.p1Time > 0);
-            if (gameState.p1Time <= 0) handleGameOver(p2Name, `נגמר הזמן ל-${p1Name}`);
+        if (playState.isPlayer1Turn) {
+            playState.p1Time--;
+            if (els.timerP1) els.timerP1.textContent = formatTime(playState.p1Time);
+            els.statCardP1?.classList.toggle('time-warning', playState.p1Time <= 30 && playState.p1Time > 0);
+            if (playState.p1Time <= 0) handleplayOver(p2Name, `נגמר הזמן ל-${p1Name}`);
         } else {
-            gameState.p2Time--;
-            if (els.timerP2) els.timerP2.textContent = formatTime(gameState.p2Time);
-            els.statCardP2?.classList.toggle('time-warning', gameState.p2Time <= 30 && gameState.p2Time > 0);
-            if (gameState.p2Time <= 0) handleGameOver(p1Name, `נגמר הזמן ל-${p2Name}`);
+            playState.p2Time--;
+            if (els.timerP2) els.timerP2.textContent = formatTime(playState.p2Time);
+            els.statCardP2?.classList.toggle('time-warning', playState.p2Time <= 30 && playState.p2Time > 0);
+            if (playState.p2Time <= 0) handleplayOver(p1Name, `נגמר הזמן ל-${p2Name}`);
         }
     }, 1000);
 };
@@ -292,16 +292,16 @@ const startTimer = () => {
  * @param {string} reason - סיבת סיום המשחק לתצוגה
  * @returns {void}
  */
-const handleGameOver = (winnerName, reason) => {
-    if (gameState.isGameOver) return;
-    gameState.isGameOver = true;
-    clearInterval(gameState.timerInterval);
+const handleplayOver = (winnerName, reason) => {
+    if (playState.isplayOver) return;
+    playState.isplayOver = true;
+    clearInterval(playState.timerInterval);
 
-    const winnerTimeLeft = winnerName === p1Name ? gameState.p1Time : gameState.p2Time;
+    const winnerTimeLeft = winnerName === p1Name ? playState.p1Time : playState.p2Time;
     const timeUsed = startTime - winnerTimeLeft;
 
     saveWinToStorage(winnerName, timeUsed);
-    audio.gameOver();
+    audio.playOver();
 
     if (els.winnerMsg) {
         els.winnerMsg.replaceChildren();
@@ -315,7 +315,7 @@ const handleGameOver = (winnerName, reason) => {
         els.winnerMsg.appendChild(titleText);
         els.winnerMsg.appendChild(reasonEl);
     }
-    els.modalGameOver?.showModal();
+    els.modalplayOver?.showModal();
 };
 /**
  * שומר ניצחון ב-localStorage עם עדכון זמן שיא.
@@ -351,53 +351,53 @@ const attachDragEvents = () => {
     if (!els.board) return;
 
     els.board.addEventListener('dragstart', (e) => {
-        if (!e.target.classList.contains('piece') || gameState.hasMovedThisTurn || gameState.isGameOver) {
+        if (!e.target.classList.contains('piece') || playState.hasMovedThisTurn || playState.isplayOver) {
     e.preventDefault();
     return;
 }
 
 const oR = parseInt(e.target.parentElement.dataset.row);
 const oC = parseInt(e.target.parentElement.dataset.col);
-const val = gameState.boardMatrix[oR][oC];
+const val = playState.boardMatrix[oR][oC];
 const isP1Piece = (val === 1 || val === 3);
 
-if (isP1Piece !== gameState.isPlayer1Turn) {
+if (isP1Piece !== playState.isPlayer1Turn) {
     e.preventDefault();
     return;
 }
-        gameState.draggedPiece = e.target;
-        gameState.originSquare = e.target.parentElement;
+        playState.draggedPiece = e.target;
+        playState.originSquare = e.target.parentElement;
     });
 
     els.board.addEventListener('dragover', (e) => e.preventDefault());
 
     els.board.addEventListener('drop', (e) => {
         e.preventDefault();
-        if (gameState.isGameOver || !gameState.originSquare) return;
+        if (playState.isplayOver || !playState.originSquare) return;
 
         const sq = e.target.closest('.cell');
         if (!sq) return;
 
-        const oR = parseInt(gameState.originSquare.dataset.row);
-        const oC = parseInt(gameState.originSquare.dataset.col);
+        const oR = parseInt(playState.originSquare.dataset.row);
+        const oC = parseInt(playState.originSquare.dataset.col);
         const nR = parseInt(sq.dataset.row);
         const nC = parseInt(sq.dataset.col);
-        const val = gameState.boardMatrix[oR][oC];
+        const val = playState.boardMatrix[oR][oC];
 
         const moveResult = checkMoveValidity(oR, oC, nR, nC, val);
         if (!moveResult.valid) return;
 
         if (moveResult.isCapture) {
-            gameState.boardMatrix[moveResult.midR][moveResult.midC] = 0;
+            playState.boardMatrix[moveResult.midR][moveResult.midC] = 0;
             audio.capture();
 
-            if (gameState.isPlayer1Turn) {
-                gameState.p1EatenCount++;
-                if (els.eatenP1) els.eatenP1.textContent = gameState.p1EatenCount;
+            if (playState.isPlayer1Turn) {
+                playState.p1EatenCount++;
+                if (els.eatenP1) els.eatenP1.textContent = playState.p1EatenCount;
             } 
             else {
-                gameState.p2EatenCount++;
-                if (els.eatenP2) els.eatenP2.textContent = gameState.p2EatenCount;
+                playState.p2EatenCount++;
+                if (els.eatenP2) els.eatenP2.textContent = playState.p2EatenCount;
             }
         } else {
             audio.move();
@@ -406,25 +406,25 @@ if (isP1Piece !== gameState.isPlayer1Turn) {
         let finalVal = val;
         if (val === 1 && nR === 0) {
             finalVal = 3;
-            gameState.p1KingsCount++;
-            if (els.kingsP1) els.kingsP1.textContent = gameState.p1KingsCount;
+            playState.p1KingsCount++;
+            if (els.kingsP1) els.kingsP1.textContent = playState.p1KingsCount;
             audio.queen();
         } else if (val === 2 && nR === 7) {
             finalVal = 4;
-            gameState.p2KingsCount++;
-            if (els.kingsP2) els.kingsP2.textContent = gameState.p2KingsCount;
+            playState.p2KingsCount++;
+            if (els.kingsP2) els.kingsP2.textContent = playState.p2KingsCount;
             audio.queen();
         }
 
         updateMatrixAfterMove(oR, oC, nR, nC, finalVal);
-        gameState.hasMovedThisTurn = true;
+        playState.hasMovedThisTurn = true;
         els.btnEnd?.classList.add('ready');
         renderBoard();
 
         if (moveResult.isCapture) {
             const { p1, p2 } = countPieces();
-            if (p1 === 0) handleGameOver(p2Name, `נגמרו הכלים של ${p1Name}`);
-            else if (p2 === 0) handleGameOver(p1Name, `נגמרו הכלים של ${p2Name}`);
+            if (p1 === 0) handleplayOver(p2Name, `נגמרו הכלים של ${p1Name}`);
+            else if (p2 === 0) handleplayOver(p1Name, `נגמרו הכלים של ${p2Name}`);
         }
     });
 };
@@ -438,15 +438,15 @@ if (isP1Piece !== gameState.isPlayer1Turn) {
  * @returns {void}
  */
 const handleHint = () => {
-    if (gameState.isGameOver) return;
+    if (playState.isplayOver) return;
 
     const directions = [[-1,-1],[-1,1],[1,-1],[1,1],[-2,-2],[-2,2],[2,-2],[2,2]];
 
     for (let r = 0; r < 8; r++) {
         for (let c = 0; c < 8; c++) {
-            const cell = gameState.boardMatrix[r][c];
+            const cell = playState.boardMatrix[r][c];
 
-            const isCurrentPlayer = gameState.isPlayer1Turn
+            const isCurrentPlayer = playState.isPlayer1Turn
                 ? (cell === 1 || cell === 3)
                 : (cell === 2 || cell === 4);
 
@@ -468,4 +468,4 @@ const handleHint = () => {
     }
 };
 // --- הפעלת המשחק ---
-setupGame();
+setupplay();

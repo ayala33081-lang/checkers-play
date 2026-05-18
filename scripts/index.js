@@ -59,7 +59,7 @@ if (authForm) {
             player2Name:     document.querySelector('#p2-username').value,
             player1Password: document.querySelector('#p1-password').value,
             player2Password: document.querySelector('#p2-password').value,
-            selectedLevel:   document.querySelector('input[name="game-level"]:checked').value,
+            selectedLevel:   document.querySelector('input[name="play-level"]:checked').value,
         };
 
         if (playersData.player1Name === playersData.player2Name) {
@@ -82,7 +82,7 @@ if (authForm) {
         if (!isPlayer1Valid || !isPlayer2Valid) return;
 
         localStorage.setItem('allPlayers', JSON.stringify(allPlayers));
-        sessionStorage.setItem('currentGameData', JSON.stringify(playersData));
-        window.location.href = `pages/game.html?level=${playersData.selectedLevel}`;
+        sessionStorage.setItem('currentplayData', JSON.stringify(playersData));
+        window.location.href = `pages/play.html?level=${playersData.selectedLevel}`;
     });
 }

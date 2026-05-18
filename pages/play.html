@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>דמקה | זירת המשחק</title>
      <link rel="stylesheet" href="../styles/global.css">
-    <link rel="stylesheet" href="../styles/game.css">
+    <link rel="stylesheet" href="../styles/play.css">
 </head>
-<body class="page-game">
+<body class="page-play">
 
 
     <header class="main-hud-header">
@@ -36,7 +36,7 @@
 </header>
 
     
-    <main class="game-layout">
+    <main class="play-layout">
         
         <section class="board-section" aria-label="לוח דמקה">
             <div id="checkers-board" class="board-container">
@@ -99,13 +99,13 @@
         </div>
     </dialog>
 
-<dialog id="modal-game-over" class="modal">
+<dialog id="modal-play-over" class="modal">
     <div class="modal-inner">
         
         <h2 class="modal-title">המשחק הסתיים!</h2>
         
         <div class="modal-body">
-            <div class="game-over-status">
+            <div class="play-over-status">
                 <p id="winner-message" class="highlight-text">המנצח הוא: שחקן 1</p>
             </div>
             <div class="final-stats">
@@ -115,11 +115,11 @@
         <div class="modal-actions-list">
             <a href="scores.html" class="btn btn-accent btn-full">לצפייה בטבלת שיאים</a>
             <a href="../index.html" class="btn btn-secondary btn-full">חזרה לדף הבית</a>
-            <button id="btn-restart-game" class="btn btn-outline btn-full">משחק חדש</button>
+            <button id="btn-restart-play" class="btn btn-outline btn-full">משחק חדש</button>
         </div>
     </div>
 </dialog>
-    <script type="module" src="../scripts/game.js"></script>
+    <script type="module" src="../scripts/play.js"></script>
 
 </body>
 </html>
